@@ -1,15 +1,9 @@
-# Ember Multi App
-
-## Warning
-This pattern is not formally sanctioned by the ember-cli. It's possible future ember-cli changes could break this causing you a painful upgrade. I will do my best to keep this up to date.
+# Ember Multiple Application
 
 ## Overview
-This repository demonstrates a pattern for structuring multiple ember-cli apps that share some common code (such as models, components, etc).
+This repository showcases structuring multiple ember-cli apps that share some common code (such as models, components, etc) from commons application.
 
-### Why?
-At [Batterii](http://batterii.com) we have multiple ember apps that share common code. These apps are separated because they are different apps, serving different purposes. They have different login pages, user home, settings, etc. But what they do share is components, models, helpers, some base services and mixins, and a few other things.
-
-If you're thinking about using this pattern for performance or isolate/break up your codebase, I would urge you to hold out for [Engines](https://github.com/emberjs/rfcs/pull/10).
+This repository is extended from `workmanw`.
 
 ## Details
 
