@@ -1,0 +1,16 @@
+{
+  "name" : "app1",
+  "path" : "common",
+  "styles" : "scss",
+  "commons" : {
+    "components" : {
+      "categories" : ["controls"],
+      "controls" : {
+        "modules" : ["ema-textfield", "something"],
+        "pod" : false
+      },
+      "modules" : ["blog-post", "something"],
+      "pod" : false
+    }
+  }
+}

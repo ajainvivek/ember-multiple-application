@@ -4,6 +4,8 @@ do_build()
 {
   pushd apps/$1
 
+  # Copy Common Modules
+
   # Build
   ember build --environment=production
 
