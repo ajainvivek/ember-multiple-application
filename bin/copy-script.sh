@@ -36,18 +36,30 @@ copyModules () {
   }
 
   # copy common routes
-  copyRoutes () {
-    echo "Module Missing"
-  }
-
-  # copy common routes
   copyModels () {
-    echo "Module Missing"
+    filetype=js
+    filepath=/models
+    if [[ -e "./apps/common/app${filepath}${category}/$1.${filetype}" ]]; then
+      mkdir "./apps/$app/lib/common/app${filepath}${category}" 2> /dev/null
+      touch "./apps/$app/lib/common/app${filepath}${category}/$1.${filetype}"
+      cp "./apps/common/app${filepath}${category}/$1.${filetype}"  "./apps/$app/lib/common/app${filepath}${category}/$1.${filetype}"
+    else
+      echo "$1.${filetype} component missing"
+    fi
   }
 
   # copy common mixins
   copyMixins () {
-    echo "Module Missing"
+    filetype=js
+    filepath=/mixins
+
+    if [[ -e "./apps/common/app${filepath}${category}/$1.${filetype}" ]]; then
+      mkdir "./apps/$app/lib/common/app${filepath}${category}" 2> /dev/null
+      touch "./apps/$app/lib/common/app${filepath}${category}/$1.${filetype}"
+      cp "./apps/common/app${filepath}${category}/$1.${filetype}"  "./apps/$app/lib/common/app${filepath}${category}/$1.${filetype}"
+    else
+      echo "$1.${filetype} component missing"
+    fi
   }
 
   # copy common services
@@ -68,10 +80,10 @@ copyModules () {
     case $1 in
     	components)
         copyComponents $module;;
-    	routes)
-    		echo "routes";;
+    	mixins)
+    		copyMixins $module;;
     	models)
-    		echo "models";;
+        copyModels $module;;
     	*)
     		echo "unknown type"
     esac
@@ -80,13 +92,16 @@ copyModules () {
 
 # Initialize
 initCopy () {
-  # # Common components on root path
-  # components=( $(jq ".commons.components.modules" $filename) )
-  #
-  # # Copy common components
-  # if [[ $components != null ]]; then
-  #   copyModules components $filename
-  # fi
+  # Categories commons
+  commons=(components mixins)
+
+  # Common components on root path
+  components=( $(jq ".commons.components.modules" $filename) )
+
+  # Copy common components
+  if [[ $components != null ]]; then
+    copyModules components $filename
+  fi
 
   # Common components categories
   componentscat=( $(jq ".commons.components.categories[]" $filename) )
@@ -100,6 +115,51 @@ initCopy () {
       copyModules components $filename $category
     done
   fi
+
+  # Common mixins on root path
+  mixins=( $(jq ".commons.mixins.modules" $filename) )
+
+  # Copy common mixins
+  if [[ $mixins != null && $mixins != '' ]]; then
+    copyModules mixins $filename
+  fi
+
+  # Common mixins categories
+  mixinscat=( $(jq ".commons.mixins.categories[]" $filename) )
+
+  # Copy common mixins category wise
+  if [[ $mixinscat != '' && $mixinscat != null ]]; then
+    for (( i=0; i<${#mixinscat[@]}; ++i )); do
+      # remove trailing quotes from string
+      category="${mixinscat[${i}]%\"}"
+      category="${category#\"}"
+      copyModules mixins $filename $category
+    done
+  fi
+
+
+  # Common models on root path
+  models=( $(jq ".commons.models.modules" $filename) )
+
+  # Copy models mixins
+  if [[ $models != null && $models != '' ]]; then
+    copyModules models $filename
+  fi
+
+  # Common models categories
+  modelscat=( $(jq ".commons.models.categories[]" $filename) )
+
+  # Copy common models category wise
+  if [[ $modelscat != null && $modelscat != '' ]]; then
+    for (( i=0; i<${#modelscat[@]}; ++i )); do
+      # remove trailing quotes from string
+      category="${modelscat[${i}]%\"}"
+      category="${category#\"}"
+      copyModules models $filename $category
+    done
+  fi
+
+
 }
 
 

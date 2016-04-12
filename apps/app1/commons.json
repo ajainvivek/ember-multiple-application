@@ -6,10 +6,25 @@
     "components" : {
       "categories" : ["controls"],
       "controls" : {
-        "modules" : ["ema-textfield", "something"],
-        "pod" : false
+        "modules" : ["ema-textfield", "something"]
       },
       "modules" : ["blog-post", "something"],
+      "pod" : false
+    },
+    "mixins" : {
+      "categories" : ["validators"],
+      "validators" : {
+        "modules" : ["ema-mandatory", "something"]
+      },
+      "modules" : ["ema-validation", "something"],
+      "pod" : false
+    },
+    "models" : {
+      "categories" : ["employee"],
+      "employee" : {
+        "modules" : ["person", "something"]
+      },
+      "modules" : ["blog-post", "user"],
       "pod" : false
     }
   }
