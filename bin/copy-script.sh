@@ -7,6 +7,9 @@
 app="app1"
 filename="apps/$app/commons.json"
 root="./apps/";
+red=`tput setaf 1`
+green=`tput setaf 2`
+reset=`tput sgr0`
 
 # Get the common modules based on type
 copyModules () {
@@ -30,7 +33,7 @@ copyModules () {
         touch "./apps/$app/lib/common/app${filepath[$i]}${category}/$1.${filetype[$i]}"
         cp "./apps/common/app${filepath[$i]}${category}/$1.${filetype[$i]}"  "./apps/$app/lib/common/app${filepath[$i]}${category}/$1.${filetype[$i]}"
       else
-      	echo "$1.${filetype[$i]} component missing"
+        echo "${red} ERROR: $1.${filetype[$i]} component missing ${reset}"
       fi
     done
   }
@@ -44,7 +47,7 @@ copyModules () {
       touch "./apps/$app/lib/common/app${filepath}${category}/$1.${filetype}"
       cp "./apps/common/app${filepath}${category}/$1.${filetype}"  "./apps/$app/lib/common/app${filepath}${category}/$1.${filetype}"
     else
-      echo "$1.${filetype} component missing"
+      echo "${red} ERROR: $1.${filetype} models missing ${reset}"
     fi
   }
 
@@ -58,7 +61,7 @@ copyModules () {
       touch "./apps/$app/lib/common/app${filepath}${category}/$1.${filetype}"
       cp "./apps/common/app${filepath}${category}/$1.${filetype}"  "./apps/$app/lib/common/app${filepath}${category}/$1.${filetype}"
     else
-      echo "$1.${filetype} component missing"
+      echo "${red} ERROR: $1.${filetype} mixins missing ${reset}"
     fi
   }
 

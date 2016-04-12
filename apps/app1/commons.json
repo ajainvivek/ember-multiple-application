@@ -8,7 +8,7 @@
       "controls" : {
         "modules" : ["ema-textfield", "something"]
       },
-      "modules" : ["blog-post", "something"],
+      "modules" : ["user-profile", "blog-post", "test"],
       "pod" : false
     },
     "mixins" : {
