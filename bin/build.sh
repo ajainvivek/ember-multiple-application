@@ -1,10 +1,18 @@
 #!/bin/bash
 
+scriptPath="$(dirname "$0")"
+apps=(app1 app2)
+
 do_build()
 {
-  pushd apps/$1
 
   # Copy Common Modules
+  sh "${scriptPath}/copy-script.sh" $1
+
+  pushd apps/$1
+
+  # Remove dist folder from public/apps dir
+  rm -Rf public/apps
 
   # Build
   ember build --environment=production
@@ -27,5 +35,12 @@ rm -Rf dist
 mkdir dist
 
 # Start building
-do_build app1
-do_build app2
+for (( i=0; i<${#apps[@]}; ++i )); do
+  do_build ${apps[$i]}
+done
+
+# Add dist folder from public/apps dir
+for (( i=0; i<${#apps[@]}; ++i )); do
+  mkdir "apps/${apps[$i]}/public/apps/"
+  cp -Rf dist "apps/${apps[$i]}/public/apps/"
+done

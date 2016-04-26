@@ -1,5 +1,5 @@
 #!/bin/bash
 
-pushd apps/app2
+pushd apps/$1
 ember serve
 popd

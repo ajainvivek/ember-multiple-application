@@ -1,0 +1,56 @@
+{
+  "name" : "app1",
+  "path" : "common",
+  "styles" : "scss",
+  "commons" : {
+    "components" : {
+      "categories" : ["controls"],
+      "controls" : {
+        "modules" : ["ema-textfield", "something"]
+      },
+      "modules" : ["user-profile", "blog-post", "test"],
+      "pod" : false
+    },
+    "mixins" : {
+      "categories" : ["validators"],
+      "validators" : {
+        "modules" : ["ema-mandatory", "something"]
+      },
+      "modules" : ["ema-validation", "something"],
+      "pod" : false
+    },
+    "models" : {
+      "categories" : ["employee"],
+      "employee" : {
+        "modules" : ["person", "something"]
+      },
+      "modules" : ["blog-post", "user"],
+      "pod" : false
+    },
+    "services" : {
+      "modules" : ["sample"],
+      "pod" : false
+    },
+    "helpers" : {
+      "categories" : ["utils"],
+      "utils" : {
+        "modules" : ["currency", "something"]
+      },
+      "pod" : false
+    },
+    "adapters" : {
+      "modules" : ["application"],
+      "pod" : false
+    },
+    "serializers" : {
+      "categories" : ["employee"],
+      "employee" : {
+        "modules" : ["person", "something"]
+      },
+      "pod" : false
+    },
+    "styles" : {
+      "modules" : ["common", "components"]
+    }
+  }
+}

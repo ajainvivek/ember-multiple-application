@@ -4,7 +4,7 @@
 # This script moves the common libs from commons app
 # Author: Ajain Vivek
 
-app="app1"
+app=$1
 filename="apps/$app/commons.json"
 root="./apps/";
 red=`tput setaf 1`
@@ -367,5 +367,5 @@ initCopy () {
 
 }
 
-
+# Initialize Copy
 initCopy
