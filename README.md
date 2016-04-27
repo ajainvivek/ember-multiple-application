@@ -3,7 +3,7 @@
 ## Overview
 This repository showcases structuring multiple ember-cli apps that share some common code (such as models, components, etc) from commons application.
 
-This repository is extended from `workmanw` repo. The pattern is modified with inclusion of dependency management, switching across apps without CORS issue, resolving pattern some pattern caveats like live reload etc.
+This repository is extended from `workmanw` repo. The pattern is modified with inclusion of dependency management, switching across apps without CORS issue and resolving some blockers issue.
 
 ## Details
 
@@ -25,13 +25,14 @@ You can use this section if you want to duplicate this setup without having to c
 
 ### Including dependency (commons.json)
 
+```javascript
 {
-  "name" : "app1",
-  "path" : "common",
-  "styles" : "scss",
+  "name" : "app1", //app name
+  "path" : "common", //commons repository path
+  "styles" : "scss", //format of stylesheet
   "commons" : {
     "components" : {
-      "categories" : ["controls"],
+      "categories" : ["controls"], //categories
       "controls" : {
         "modules" : ["ema-textfield", "something"]
       },
@@ -40,6 +41,7 @@ You can use this section if you want to duplicate this setup without having to c
     }
   }
 }
+```
 
 The above format can be extended to include models, services, mixins etc.
 
