@@ -3,18 +3,18 @@
 ## Overview
 This repository showcases structuring multiple ember-cli apps that share some common code (such as models, components, etc) from commons application.
 
-This repository is extended from `workmanw`.
+This repository is extended from `workmanw` repo. The pattern is modified with inclusion of dependency management, switching across apps without CORS issue, resolving pattern some pattern caveats like live reload etc.
 
 ## Details
 
 ### Summary
 
-The pattern demonstrated by this repo is essentially multiple concurrent ember-cli based applications. These applications make use of a "local ember-addon" mechanism and a symlink. Each app exists independantly of the others, they just share common code. When developing you'll use multiple to servers (one per app). When building the script will trigger multiple `ember build` calls (one per app) and smash the builds together into a single dist (there is no conflict concern since the files will be fingerprinted).
+The pattern demonstrated by this repo is essentially multiple concurrent ember-cli based applications. These applications make use of a "local ember-addon" mechanism. Each app exists independantly of the others, they just share common code. When developing you'll use multiple to servers (one per app). When building the script will trigger multiple `ember build` calls (one per app) and smash the builds together into a single dist (there is no conflict concern since the files will be fingerprinted). The common application acts as a guide to share components, services, mixins etc. Multiple apps interact with each other in a single port using static assets distributed hook. Apps talk to each with sharing context.
 
 ### Outline of configurations.
 You can use this section if you want to duplicate this setup without having to clone this repo.
 
-* "apps/common" is symlinked to "apps/app1/lib/common" and "apps/app2/lib/common".
+* "apps/common" hooks required dependencies via "commons.json".
 * "apps/app1/package.json" and "apps/app2/package.json" include "lib/common" as a "ember-addon".
 * "apps/common/package.json" has keywords for "ember-addon".
 * "apps/common/app/styles/common.scss" imports all SASS files in the common directory.
@@ -22,7 +22,27 @@ You can use this section if you want to duplicate this setup without having to c
 * **ALL** apps (app1 and app2) have the same `modulePrefix` set in "config/environment.js".
   - All ES2015 imports use "app" as the prefix, even in "common". Eg: `Import CommonAppMixin from "app/mixins/common";`
 * Each app is configured with a different port (see: "apps/app1/.ember-cli" and "apps/app2/.ember-cli")
-* "apps/common/tests/integration" and "apps/common/tests/unit" are symlinked to "apps/app1/tests/common-integration" and "apps/app1/tests/common-unit" respectfully.
+
+### Including dependency (commons.json)
+
+{
+  "name" : "app1",
+  "path" : "common",
+  "styles" : "scss",
+  "commons" : {
+    "components" : {
+      "categories" : ["controls"],
+      "controls" : {
+        "modules" : ["ema-textfield", "something"]
+      },
+      "modules" : ["user-profile", "blog-post", "test"],
+      "pod" : false
+    }
+  }
+}
+
+The above format can be extended to include models, services, mixins etc.
+
 
 ## Using repo
 
@@ -32,17 +52,11 @@ You can use this section if you want to duplicate this setup without having to c
 
 ### Running server
 
-  `./bin/serve-app1.sh` [localhost:4200](http://localhost:4200)
-
-  `./bin/serve-app2.sh` [localhost:4300](http://localhost:4300)
+  `./bin/serve.sh app_name` [localhost:4200](http://localhost:4200)
 
 Each server runs on a different port so you can launch multiple at the same time.
 
 ### Testing
-
-You'll notice that there are "apps/common/tests/integration" and "apps/common/tests/unit". These tests relate to the code in the common addon, though due to ember-cli structure, they are not able to run independantly. So you'll find two additional symlinks in "apps/app1/test" for "common-integration" and "common-unit".
-
-Thus common tests get lumped into the first app.
 
   `./bin/test.sh`
 
@@ -58,11 +72,10 @@ Thus common tests get lumped into the first app.
 
 ### Adding another app
   * `cd apps && ember init app3`
-  * `mkdir app3/lib && cd app3/lib && ln -s ../../common .`
+  * `mkdir app3/lib && cd app3/lib.`
   * Edit "app3/package.json", adding the following (see app1/package.json as example):
   * Edit "app3/.ember-cli" and bump the port number
-  * Copy "bin/serve-app1.sh" to "bin/serve-app3.sh"
-  * Edit "bin/install.sh", "bin/build.sh", "bin/test.sh", and "bin/serve-app3.sh". Updates should be obvious.
+  * Include the new app to all the scripts
 
   ```"ember-addon": { "paths": [ "lib/common" ]}```
 
@@ -73,6 +86,3 @@ Thus common tests get lumped into the first app.
   - You will have to start multiple servers when developing on more that one app at a time.
 * All apps must share the same name
   - As mentioned above, all apps must have the same `modulePrefix`.
-* WatchMan
-  - You will not be able to use watchman. It has an existing bug that prevents it from properly following symlinks. See: http://www.ember-cli.com/user-guide/#watchman for uninstall details.
-* Tests for common need to run as part of one of your apps. They cannot be easily run independantly.
