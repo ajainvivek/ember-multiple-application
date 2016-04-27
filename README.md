@@ -3,7 +3,7 @@
 ## Overview
 This repository showcases structuring multiple ember-cli apps that share some common code (such as models, components, etc) from commons application.
 
-This repository is extended from `workmanw` repo. The pattern is modified with inclusion of dependency management, switching across apps without CORS issue and resolving some blockers issue.
+This repository is extended from `workmanw` repo. The pattern is modified with inclusion of dependency management, switching across apps resolving CORS issue and also resolving some blockers issue.
 
 ## Details
 
