@@ -65,7 +65,7 @@ Each server runs on a different port so you can launch multiple at the same time
 
   -- or --
 
-  `./bin/server-app1.sh` and [localhost:4200/tests](http://localhost:4200/tests)
+  `./bin/server.sh app_name` and [localhost:4200/tests](http://localhost:4200/tests)
 
 ### Building
 
