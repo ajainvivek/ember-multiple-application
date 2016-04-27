@@ -14,6 +14,7 @@ The pattern demonstrated by this repo is essentially multiple concurrent ember-c
 ### Outline of configurations.
 You can use this section if you want to duplicate this setup without having to clone this repo.
 
+* install "jq (lightweight and flexible command-line JSON processor)" [Download](https://stedolan.github.io/jq/download/)
 * "apps/common" hooks required dependencies via "commons.json".
 * "apps/app1/package.json" and "apps/app2/package.json" include "lib/common" as a "ember-addon".
 * "apps/common/package.json" has keywords for "ember-addon".
