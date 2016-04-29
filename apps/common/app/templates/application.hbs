@@ -1,0 +1,12 @@
+<h2 id="title">Welcome to Common App</h2>
+
+{{#each widgets as |widget|}}
+  {{#liquid-bind widget class="progressive-loader" as |card|}}
+    {{#component card.name id=card.id}}
+      {{card.data}}
+    {{/component}}
+  {{/liquid-bind}}
+{{/each}}
+
+<button type="button" name="button" {{action "pushLabel"}}>Push Label</button>
+<button type="button" name="button" {{action "popLabel"}}>Pop Label</button>

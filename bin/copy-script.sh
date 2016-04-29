@@ -24,6 +24,7 @@ copyModules () {
 
   # copy common components
   copyComponents () {
+    local i
     filetype=(js scss hbs)
     filepath=(/components /styles/components /templates/components)
 
@@ -139,10 +140,11 @@ copyModules () {
       touch "./apps/$app/lib/common/app${filepath}${category}/$1.${filetype}"
       cp "./apps/common/app${filepath}${category}/$1.${filetype}"  "./apps/$app/lib/common/app${filepath}${category}/$1.${filetype}"
     else
-      echo "${red} ERROR: $1.${filetype} serializer missing ${reset}"
+      echo "${red} ERROR: $1.${filetype} styles missing ${reset}"
     fi
   }
 
+  local i
   for (( i=0; i<${#modules[@]}; ++i )); do
     # remove trailing quotes from string
     module="${modules[${i}]%\"}"

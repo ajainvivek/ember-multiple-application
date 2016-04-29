@@ -12,45 +12,18 @@
       "pod" : false
     },
     "mixins" : {
-      "categories" : ["validators"],
-      "validators" : {
-        "modules" : ["ema-mandatory", "something"]
-      },
-      "modules" : ["ema-validation", "something"],
-      "pod" : false
     },
     "models" : {
-      "categories" : ["employee"],
-      "employee" : {
-        "modules" : ["person", "something"]
-      },
-      "modules" : ["blog-post", "user"],
-      "pod" : false
     },
     "services" : {
-      "modules" : ["sample"],
-      "pod" : false
     },
     "helpers" : {
-      "categories" : ["utils"],
-      "utils" : {
-        "modules" : ["currency", "something"]
-      },
-      "pod" : false
     },
     "adapters" : {
-      "modules" : ["application"],
-      "pod" : false
     },
     "serializers" : {
-      "categories" : ["employee"],
-      "employee" : {
-        "modules" : ["person", "something"]
-      },
-      "pod" : false
     },
     "styles" : {
-      "modules" : ["common", "components"]
     }
   }
 }

@@ -1,7 +1,7 @@
 {
   "name": "common",
   "version": "0.0.0",
-  "description": "Small description for app goes here",
+  "description": "Small description for common goes here",
   "private": true,
   "directories": {
     "doc": "doc",
@@ -20,7 +20,6 @@
   "license": "MIT",
   "devDependencies": {
     "broccoli-asset-rev": "^2.1.2",
-    "broccoli-sass": "^0.6.6",
     "ember-cli": "1.13.8",
     "ember-cli-app-version": "0.5.0",
     "ember-cli-babel": "^5.1.3",
@@ -35,8 +34,9 @@
     "ember-cli-sri": "^1.0.3",
     "ember-cli-uglify": "^1.2.0",
     "ember-data": "1.13.8",
-    "ember-data-fixture-adapter": "1.13.0",
     "ember-disable-proxy-controllers": "^1.0.0",
-    "ember-export-application-global": "^1.0.3"
+    "ember-export-application-global": "^1.0.3",
+    "ember-lodash": "0.0.7",
+    "liquid-fire": "0.23.0"
   }
 }
