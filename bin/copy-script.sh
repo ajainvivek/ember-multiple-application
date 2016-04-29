@@ -176,197 +176,32 @@ copyModules () {
 # Initialize
 initCopy () {
   # Categories commons
-  commons=(components mixins)
+  commons=(components mixins models services helpers adapters serializers styles)
 
-  # Common components on root path
-  components=( $(jq ".commons.components.modules" $filename) )
+  for (( i=0; i<${#commons[@]}; ++i )); do
+    # Common modules on root path
+    mods=( $(jq ".commons.${commons[$i]}.modules" $filename) )
 
-  # Copy common components
-  if [[ $components != null ]]; then
-    copyModules components $filename
-  fi
+    # Copy common modules
+    if [[ $mods != null ]]; then
+      copyModules ${commons[$i]} $filename
+    fi
 
-  # does components categories exists
-  iscomponentscat=( $(jq ".commons.components.categories" $filename) )
+    # does modules categories exists
+    iscat=( $(jq ".commons.${commons[$i]}.categories" $filename) )
 
-  # Copy common components category wise
-  if [[ $iscomponentscat != null && $iscomponentscat != '' ]]; then
-    # Common components categories
-    componentscat=( $(jq ".commons.components.categories[]" $filename) )
-    for (( i=0; i<${#componentscat[@]}; ++i )); do
-      # remove trailing quotes from string
-      category="${componentscat[${i}]%\"}"
-      category="${category#\"}"
-      copyModules components $filename $category
-    done
-  fi
-
-  # Common mixins on root path
-  mixins=( $(jq ".commons.mixins.modules" $filename) )
-
-  # Copy common mixins
-  if [[ $mixins != null && $mixins != '' ]]; then
-    copyModules mixins $filename
-  fi
-
-  # does mixins categories exists
-  ismixinscat=( $(jq ".commons.mixins.categories" $filename) )
-
-  # Copy common mixins category wise
-  if [[ $ismixinscat != '' && $ismixinscat != null ]]; then
-    # Common mixins categories
-    mixinscat=( $(jq ".commons.mixins.categories[]" $filename) )
-    for (( i=0; i<${#mixinscat[@]}; ++i )); do
-      # remove trailing quotes from string
-      category="${mixinscat[${i}]%\"}"
-      category="${category#\"}"
-      copyModules mixins $filename $category
-    done
-  fi
-
-  # Common models on root path
-  models=( $(jq ".commons.models.modules" $filename) )
-
-  # Copy models mixins
-  if [[ $models != null && $models != '' ]]; then
-    copyModules models $filename
-  fi
-
-  # does models categories exists
-  ismodelscat=( $(jq ".commons.models.categories" $filename) )
-
-  # Copy common models category wise
-  if [[ $ismodelscat != null && $ismodelscat != '' ]]; then
-    # Common models categories
-    modelscat=( $(jq ".commons.models.categories[]" $filename) )
-    for (( i=0; i<${#modelscat[@]}; ++i )); do
-      # remove trailing quotes from string
-      category="${modelscat[${i}]%\"}"
-      category="${category#\"}"
-      copyModules models $filename $category
-    done
-  fi
-
-  # Common services on root path
-  services=( $(jq ".commons.services.modules" $filename) )
-
-  # Copy services mixins
-  if [[ $services != null && $services != '' ]]; then
-    copyModules services $filename
-  fi
-
-  # does services categories exists
-  isservicescat=( $(jq ".commons.services.categories" $filename) )
-
-  # Copy common services category wise
-  if [[ $isservicescat != null && $isservicescat != '' ]]; then
-    # Common services categories
-    servicescat=( $(jq ".commons.services.categories[]" $filename) )
-
-    for (( i=0; i<${#servicescat[@]}; ++i )); do
-      # remove trailing quotes from string
-      category="${servicescat[${i}]%\"}"
-      category="${category#\"}"
-      copyModules services $filename $category
-    done
-  fi
-
-  # Common helpers on root path
-  helpers=( $(jq ".commons.helpers.modules" $filename) )
-
-  # Copy helpers
-  if [[ $helpers != null && $helpers != '' ]]; then
-    copyModules helpers $filename
-  fi
-
-  # does helpers categories exists
-  ishelperscat=( $(jq ".commons.helpers.categories" $filename) )
-
-  # Copy common helpers category wise
-  if [[ $ishelperscat != null && $ishelperscat != '' ]]; then
-    # Common helpers categories
-    helperscat=( $(jq ".commons.helpers.categories[]" $filename) )
-
-    for (( i=0; i<${#helperscat[@]}; ++i )); do
-      # remove trailing quotes from string
-      category="${helperscat[${i}]%\"}"
-      category="${category#\"}"
-      copyModules helpers $filename $category
-    done
-  fi
-
-  # Common adapters on root path
-  adapters=( $(jq ".commons.adapters.modules" $filename) )
-
-  # Copy adapters
-  if [[ $adapters != null && $adapters != '' ]]; then
-    copyModules adapters $filename
-  fi
-
-  # does adapters categories exists
-  isadapterscat=( $(jq ".commons.adapters.categories" $filename) )
-
-  # Copy common adapters category wise
-  if [[ $isadapterscat != null && $isadapterscat != '' ]]; then
-    # Common adapters categories
-    adapterscat=( $(jq ".commons.adapters.categories[]" $filename) )
-
-    for (( i=0; i<${#adapterscat[@]}; ++i )); do
-      # remove trailing quotes from string
-      category="${adapterscat[${i}]%\"}"
-      category="${category#\"}"
-      copyModules adapters $filename $category
-    done
-  fi
-
-  # Common serializers on root path
-  serializers=( $(jq ".commons.serializers.modules" $filename) )
-
-  # Copy serializers
-  if [[ $serializers != null && $serializers != '' ]]; then
-    copyModules serializers $filename
-  fi
-
-  # does serializers categories exists
-  isserializerscat=( $(jq ".commons.serializers.categories" $filename) )
-
-  # Copy common serializers category wise
-  if [[ $isserializerscat != null && $isserializerscat != '' ]]; then
-    # Common serializers categories
-    serializerscat=( $(jq ".commons.serializers.categories[]" $filename) )
-
-    for (( i=0; i<${#serializerscat[@]}; ++i )); do
-      # remove trailing quotes from string
-      category="${serializerscat[${i}]%\"}"
-      category="${category#\"}"
-      copyModules serializers $filename $category
-    done
-  fi
-
-  # Common styles on root path
-  styles=( $(jq ".commons.styles.modules" $filename) )
-
-  # Copy styles
-  if [[ $styles != null && $styles != '' ]]; then
-    copyModules styles $filename
-  fi
-
-  # does styles categories exists
-  isstylescat=( $(jq ".commons.styles.categories" $filename) )
-
-  # Copy common styles category wise
-  if [[ $isstylescat != null && $isstylescat != '' ]]; then
-    # Common styles categories
-    stylescat=( $(jq ".commons.styles.categories[]" $filename) )
-
-    for (( i=0; i<${#stylescat[@]}; ++i )); do
-      # remove trailing quotes from string
-      category="${stylescat[${i}]%\"}"
-      category="${category#\"}"
-      copyModules styles $filename $category
-    done
-  fi
-
+    # Copy common modules category wise
+    if [[ $iscat != null && $iscat != '' ]]; then
+      # Common modules categories
+      modscat=( $(jq ".commons.${commons[$i]}.categories[]" $filename) )
+      for (( j=0; j<${#modscat[@]}; ++j )); do
+        # remove trailing quotes from string
+        category="${modscat[${j}]%\"}"
+        category="${category#\"}"
+        copyModules ${commons[$i]} $filename $category
+      done
+    fi
+  done
 }
 
 # Initialize Copy
